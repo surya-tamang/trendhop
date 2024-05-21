@@ -13,7 +13,7 @@ export default function Home() {
                     </div>
                 </div>
                 <Heading heading="Top Picks For You" />
-                <div className='h-96 py-2 px-5 bg-red-200'>
+                <div className='h-auto py-2 px-11'>
                     <div className='flex gap-4'>
                         <h1>Men</h1>
                         <h1>Women</h1>

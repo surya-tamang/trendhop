@@ -1,0 +1,24 @@
+.swiper#swiper {
+    height: 30rem;
+    margin: 10px 0;
+    padding: 25px 5px;
+    overflow: hidden;
+}
+
+.swiper-slide#swiperSlide {
+    background-color: #dddcdc;
+    padding: 10px;
+    /* box-shadow: 5px 5px 5px #dddcdc; */
+}
+
+.swiper-slide#swiperSlide img {
+    display: block;
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+}
+
+.swiper-slide#swiperSlide .des {
+    height: 25%;
+    width: 100%;
+}

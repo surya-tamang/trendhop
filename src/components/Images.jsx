@@ -5,13 +5,13 @@ import menFourImage from '../images/top picks/boy-dress-4.jpg'
 
 
 export const topPickMen = [
-    { image: menOneImage, title: "Navy blue shirt + Pant" },
-    { image: menTwoImage, title: "Puple silk shirt" },
-    { image: menThreeImage, title: "White coat + Pant" },
-    { image: menFourImage, title: "Gray long coat" },
-    { image: menFourImage, title: "Gray long coat" },
-    { image: menOneImage, title: "Navy blue shirt + Pant" },
-    { image: menThreeImage, title: "White coat + Pant" }
+    { image: menOneImage, title: "Navy blue shirt + Pant", price: 2500 },
+    { image: menTwoImage, title: "Puple silk shirt", price: 2500 },
+    { image: menThreeImage, title: "White coat + Pant", price: 2500 },
+    { image: menFourImage, title: "Gray long coat", price: 2500 },
+    { image: menFourImage, title: "Gray long coat", price: 2500 },
+    { image: menOneImage, title: "Navy blue shirt + Pant", price: 2500 },
+    { image: menThreeImage, title: "White coat + Pant", price: 2500 }
 ]
 
 import womenOneImage from '../images/top picks/woman-dress-1.jpg'
