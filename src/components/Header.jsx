@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export function Header() {
     const [searchValue, setSearchValue] = useState();
+
+    const [menCatOp, setMenCatOp] = useState(100);
+    const [selectedCategory, setSelectedCategory] = useState('men');
+
+    const menCategory = () => {
+        setMenCatOp(100);
+        setSelectedCategory('men');
+    }
+    const womenCategory = () => {
+        setSelectedCategory('women');
+    }
+
+    const menCat = ['All', 'Trending', 'Casual wears', 'Classic-wears', 'Jeans', 'T-shirts and vests', 'Shirts', 'Baggy wears', 'Pants', 'Inner wears']
+
     return (
         <>
-            <header className='flex w-full justify-between items-center px-6 sticky top-0 z-10 bg-slate-200'>
+            <header className='flex w-full justify-between items-center px-6 sticky top-0 z-20 bg-slate-200'>
 
                 <div>
                     <img className='w-32' src="logo.png" alt="logo" />
@@ -12,8 +26,8 @@ export function Header() {
 
                 <nav>
                     <ul className='flex'>
-                        <li className='hover:bg-accent p-6 hover:text-slate-200'>Men</li>
-                        <li className='hover:bg-accent p-6 hover:text-slate-200'>Women</li>
+                        <li className={`p-6 ${selectedCategory == 'men' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={menCategory}>Men</li>
+                        <li className={`p-6 ${selectedCategory == 'women' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={womenCategory}>Women</li>
                     </ul>
                 </nav>
 
@@ -30,6 +44,18 @@ export function Header() {
                     </div>
                 </div>
 
+                <div className={`categoryBar absolute text-slate-200 flex gap-4 bg-accent items-center w-full h-16 z-20 justify-center left-0 opacity-${menCatOp}`}>
+                    {
+                        menCat.map((category, index) => {
+                            return (
+                                <React.Fragment key={index}>
+                                    <li className='hover:underline transition-all duration-300 cursor-pointer'>{category}</li>
+                                    {index < menCat.length - 1 && <span>|</span>}
+                                </React.Fragment>
+                            )
+                        })
+                    }
+                </div>
             </header>
         </>
     )

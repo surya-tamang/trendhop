@@ -38,3 +38,12 @@ h1.heading:after {
     right: 0;
     bottom: 0;
 }
+
+.categoryBar {
+    /* background-color: red; */
+    top: 72px;
+}
+
+.categoryBar li {
+    list-style: none;
+}
