@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export function Header() {
     const [searchValue, setSearchValue] = useState();
 
     const [menCatOp, setMenCatOp] = useState(100);
     const [selectedCategory, setSelectedCategory] = useState('men');
+    const [display, setDisplay] = useState('hidden')
 
     const menCategory = () => {
         setMenCatOp(100);
@@ -18,7 +20,7 @@ export function Header() {
 
     return (
         <>
-            <header className='flex w-full justify-between items-center px-6 sticky top-0 z-20 bg-slate-200'>
+            <header className='flex w-full justify-between items-center px-6 sticky top-0 z-20 bg-slate-200 relative'>
 
                 <div>
                     <img className='w-32' src="logo.png" alt="logo" />
@@ -39,7 +41,7 @@ export function Header() {
                         </button>
                     </div>
                     <div className='flex gap-5'>
-                        <button><i className="fa-solid fa-user"></i></button>
+                        <button onClick={() => display === 'hidden' ? setDisplay('flex') : setDisplay('hidden')}><i className="fa-solid fa-user"></i></button>
                         <button><i className="fa-solid fa-cart-shopping"></i></button>
                     </div>
                 </div>
@@ -56,7 +58,23 @@ export function Header() {
                         })
                     }
                 </div>
-            </header>
+
+                <div className={`user absolute right-0 top-16 h-auto w-48 bg-slate-200 z-30 p-2 ${display} flex-col`}>
+                    <div className='text-accent flex gap-3'>
+                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/login'>Login</NavLink>
+                        <span>|</span>
+                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/signup'>Signup</NavLink>
+                    </div>
+                    <div className='flex flex-col mt-4 gap-2'>
+                        <NavLink>My Account</NavLink>
+                        <NavLink>My Orders</NavLink>
+                        <NavLink>Returns information</NavLink>
+                    </div>
+                </div>
+                {/* <div className='cart'>
+
+                </div> */}
+            </header >
         </>
     )
 }
