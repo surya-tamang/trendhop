@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import Cart from './Cart';
 
 export function Header() {
     const [searchValue, setSearchValue] = useState();
 
-    const [menCatOp, setMenCatOp] = useState(100);
+    // const [menCatOp, setMenCatOp] = useState(100);
+    const [categ, setCateg] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('men');
     const [display, setDisplay] = useState('hidden')
+    const [cartDisplay, setCartDisplay] = useState('hidden')
 
     const menCategory = () => {
-        setMenCatOp(100);
+        setCateg(menCat);
         setSelectedCategory('men');
     }
     const womenCategory = () => {
+        setCateg(womenCat);
         setSelectedCategory('women');
     }
 
+    const handleHide = () => {
+        setCartDisplay('hidden')
+    }
+    useEffect(() => {
+        menCategory();
+    }, [])
+
     const menCat = ['All', 'Trending', 'Casual wears', 'Classic-wears', 'Jeans', 'T-shirts and vests', 'Shirts', 'Baggy wears', 'Pants', 'Inner wears']
+    const womenCat = ['All', 'Trending', 'Dresses', 'Pants', 'Accessories', 'Blouses']
 
     return (
         <>
@@ -40,17 +52,17 @@ export function Header() {
                     </div>
                     <div className='flex gap-5'>
                         <button onClick={() => display === 'hidden' ? setDisplay('flex') : setDisplay('hidden')}><i className="fa-solid fa-user"></i></button>
-                        <button><i className="fa-solid fa-cart-shopping"></i></button>
+                        <button onClick={() => cartDisplay === 'hidden' ? setCartDisplay('block') : setCartDisplay('hidden')}><i className="fa-solid fa-cart-shopping"></i></button>
                     </div>
                 </div>
 
-                <div className={`categoryBar absolute text-slate-200 flex gap-4 bg-accent items-center w-full h-16 z-20 justify-center left-0 opacity-${menCatOp}`}>
+                <div className={`categoryBar absolute text-slate-200 flex gap-4 bg-accent items-center w-full h-16 z-20 justify-center left-0`}>
                     {
-                        menCat.map((category, index) => {
+                        categ.map((category, index) => {
                             return (
                                 <React.Fragment key={index}>
                                     <li className='hover:underline transition-all duration-300 cursor-pointer'>{category}</li>
-                                    {index < menCat.length - 1 && <span>|</span>}
+                                    {index < categ.length - 1 && <span>|</span>}
                                 </React.Fragment>
                             )
                         })
@@ -58,20 +70,18 @@ export function Header() {
                 </div>
 
                 <div className={`user absolute right-0 top-16 h-auto w-48 bg-slate-200 z-30 p-2 ${display} flex-col`}>
-                    <div className='text-accent flex gap-3'>
-                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/log-in'>Login</NavLink>
+                    <div className='text-accent flex gap-3 bg-slate-100 p-2 rounded-lg w-full justify-center'>
+                        <NavLink exact='true' activeclassname="active" className='hover:underline' to='/fashion-bazar/log-in'>Login</NavLink>
                         <span>|</span>
-                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/sign-up'>Signup</NavLink>
+                        <NavLink exact='true' activeclassname="active" className='hover:underline' to='/fashion-bazar/sign-up'>Signup</NavLink>
                     </div>
                     <div className='flex flex-col mt-4 gap-2'>
-                        <NavLink>My Account</NavLink>
-                        <NavLink>My Orders</NavLink>
-                        <NavLink>Returns information</NavLink>
+                        <NavLink className='hover:underline'>My Account</NavLink>
+                        <NavLink className='hover:underline'>My Orders</NavLink>
+                        <NavLink className='hover:underline'>Returns information</NavLink>
                     </div>
                 </div>
-                {/* <div className='cart'>
-
-                </div> */}
+                <Cart display={cartDisplay} handleHide={handleHide} />
             </header >
         </>
     )
