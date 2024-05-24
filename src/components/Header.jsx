@@ -22,9 +22,7 @@ export function Header() {
         <>
             <header className='flex w-full justify-between items-center px-6 sticky top-0 z-20 bg-slate-200 relative'>
 
-                <div>
-                    <img className='w-32' src="logo.png" alt="logo" />
-                </div>
+                <NavLink to={'/fashion-bazar'}><img className='w-32' src="logo.png" alt="logo" /></NavLink>
 
                 <nav>
                     <ul className='flex'>
@@ -61,9 +59,9 @@ export function Header() {
 
                 <div className={`user absolute right-0 top-16 h-auto w-48 bg-slate-200 z-30 p-2 ${display} flex-col`}>
                     <div className='text-accent flex gap-3'>
-                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/login'>Login</NavLink>
+                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/log-in'>Login</NavLink>
                         <span>|</span>
-                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/signup'>Signup</NavLink>
+                        <NavLink exact='true' activeclassname="active" to='/fashion-bazar/sign-up'>Signup</NavLink>
                     </div>
                     <div className='flex flex-col mt-4 gap-2'>
                         <NavLink>My Account</NavLink>
