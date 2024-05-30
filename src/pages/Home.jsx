@@ -7,7 +7,7 @@ import Banner from '../components/Banner'
 import SummerImg from '../images/banner.png'
 import NeedTypeCard from '../components/NeedTypeCard'
 import Testimonial from '../components/Testimonial'
-import Cart from '../components/Cart'
+// import Cart from '../components/Cart'
 
 export default function Home() {
 

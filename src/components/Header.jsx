@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Cart from './Cart';
+import CategBar from './CategBar';
+// import MenuMobile from './MenuMobile';
 
 export function Header() {
     const [searchValue, setSearchValue] = useState();
 
-    // const [menCatOp, setMenCatOp] = useState(100);
     const [categ, setCateg] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('men');
     const [display, setDisplay] = useState('hidden')
@@ -23,6 +24,11 @@ export function Header() {
     const handleHide = () => {
         setCartDisplay('hidden')
     }
+
+    const handleHamburger = () => {
+        console.log('clicked')
+    }
+
     useEffect(() => {
         menCategory();
     }, [])
@@ -32,14 +38,20 @@ export function Header() {
 
     return (
         <>
+            {/* <MenuMobile categ={categ} /> */}
             <header className='flex w-full justify-between items-center px-6 sticky top-0 z-20 bg-slate-200 relative'>
+                <div className='flex items-center'>
+                    <button onClick={handleHamburger} className='sm:hidden'><i className="fa-solid fa-bars" id='menuBar'></i></button>
 
-                <NavLink to={'/fashion-bazar'}><img className='w-32' src="logo.png" alt="logo" /></NavLink>
+                    <NavLink to={'/fashion-bazar'}><img className='w-32' src="logo.png" alt="logo" /></NavLink>
+                </div>
+
+
 
                 <nav>
                     <ul className='flex'>
-                        <li className={`p-6 ${selectedCategory == 'men' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={menCategory}>Men</li>
-                        <li className={`p-6 ${selectedCategory == 'women' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={womenCategory}>Women</li>
+                        <NavLink to='/fashion-bazar/men' className={`p-6 ${selectedCategory == 'men' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={menCategory}>Men</NavLink>
+                        <NavLink  className={`p-6 ${selectedCategory == 'women' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={womenCategory}>Women</NavLink>
                     </ul>
                 </nav>
 
@@ -56,17 +68,8 @@ export function Header() {
                     </div>
                 </div>
 
-                <div className={`categoryBar absolute text-slate-200 flex gap-4 bg-accent items-center w-full h-16 z-20 justify-center left-0`}>
-                    {
-                        categ.map((category, index) => {
-                            return (
-                                <React.Fragment key={index}>
-                                    <li className='hover:underline transition-all duration-300 cursor-pointer'>{category}</li>
-                                    {index < categ.length - 1 && <span>|</span>}
-                                </React.Fragment>
-                            )
-                        })
-                    }
+                <div className={`categoryBar absolute text-slate-200 flex flex-wrap py-4 gap-4 bg-accent items-center w-full h-auto z-20 justify-center left-0`}>
+                    <CategBar categ={categ} path='/fashion-bazar/men' />
                 </div>
 
                 <div className={`user absolute right-0 top-16 h-auto w-48 bg-slate-200 z-30 p-2 ${display} flex-col`}>
