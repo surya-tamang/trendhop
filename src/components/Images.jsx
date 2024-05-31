@@ -28,3 +28,29 @@ export const topPickWomen = [
     { image: womenOneImage, title: "Gray cloth" },
     { image: womenThreeImage, title: "White coat + Pant" }
 ]
+
+import casual1 from '../images/men-casual/casual1.jpg';
+
+export const menCasual = [
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' },
+    { image: casual1, title: 'White sweat-shirts', price: 'Rs 2200' }
+]
