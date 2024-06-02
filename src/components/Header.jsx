@@ -4,7 +4,7 @@ import Cart from './Cart';
 import CategBar from './CategBar';
 // import MenuMobile from './MenuMobile';
 
-export function Header() {
+export function Header({ cartList }) {
     const [searchValue, setSearchValue] = useState();
 
     const [categ, setCateg] = useState([]);
@@ -51,7 +51,7 @@ export function Header() {
                 <nav>
                     <ul className='flex'>
                         <NavLink to='/fashion-bazar/men' className={`p-6 ${selectedCategory == 'men' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={menCategory}>Men</NavLink>
-                        <NavLink  className={`p-6 ${selectedCategory == 'women' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={womenCategory}>Women</NavLink>
+                        <NavLink className={`p-6 ${selectedCategory == 'women' ? 'bg-accent text-slate-200' : 'hover:underline'} cursor-pointer transition-all duration-300`} onClick={womenCategory}>Women</NavLink>
                     </ul>
                 </nav>
 
@@ -84,7 +84,7 @@ export function Header() {
                         <NavLink className='hover:underline'>Returns information</NavLink>
                     </div>
                 </div>
-                <Cart display={cartDisplay} handleHide={handleHide} />
+                <Cart display={cartDisplay} handleHide={handleHide} cartList={cartList} />
             </header >
         </>
     )

@@ -1,12 +1,12 @@
 import React from 'react'
 
-const ShopButton = () => {
+const ShopButton = ({ cartButton }) => {
     return (
 
         <div className='flex justify-between w-full gap-2'>
             <button className='bg-accent w-full py-1 text-slate-200'>Buy</button>
 
-            <button className='bg-accent w-full py-1 text-slate-200 flex gap-2 items-center justify-center'><span>Add</span><i className="fa-solid fa-cart-shopping"></i></button>
+            <button onClick={cartButton} className='bg-accent w-full py-1 text-slate-200 flex gap-2 items-center justify-center'><span>Add</span><i className="fa-solid fa-cart-shopping"></i></button>
         </div>
 
     )

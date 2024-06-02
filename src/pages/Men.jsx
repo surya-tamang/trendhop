@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { menCasual } from '../components/Images'
 import ShopButton from '../components/ShopButton';
-export default function Men() {
+export default function Men({ cartButton }) {
 
 
     return (
@@ -14,12 +14,12 @@ export default function Men() {
                             return (
                                 <div className='w-48 h-72 bg-slate-300 flex flex-col p-2' key={index}>
                                     <div className='w-full h-10/12 overflow-hidden'>
-                                        <img src={image} alt={title} className='w-full h-full object-cover'/>
+                                        <img src={image} alt={title} className='w-full h-full object-cover' />
                                     </div>
                                     <div>
                                         <h1>{title}</h1>
                                         <p>{price}</p>
-                                        <ShopButton />
+                                        <ShopButton cartButton={() => cartButton(item)} />
                                     </div>
                                 </div>
                             )
