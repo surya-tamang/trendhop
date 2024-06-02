@@ -12,18 +12,16 @@ function App() {
   const [cartList, setCartList] = useState([]);
 
   const handleCartButton = (product) => {
-    setCartList((prevCartList) => [...prevCartList, product])
-    console.log('added', product);
-    console.log('updated', cartList);
+    setCartList((prevCartList) => [...prevCartList, product]);
   }
 
 
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <Header cartList={cartList} />
         <Routes>
-          <Route path='/fashion-bazar' element={<Home cartList={cartList} />} />
+          <Route path='/fashion-bazar' element={<Home />} />
           <Route path='/fashion-bazar/men' element={<Men cartButton={handleCartButton} />} />
           <Route path='/fashion-bazar/log-in' element={<Login />} />
           <Route path='/fashion-bazar/sign-up' element={<Signup />} />

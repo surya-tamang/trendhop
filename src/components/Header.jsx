@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Cart from './Cart';
 import CategBar from './CategBar';
-// import MenuMobile from './MenuMobile';
 
 export function Header({ cartList }) {
     const [searchValue, setSearchValue] = useState();

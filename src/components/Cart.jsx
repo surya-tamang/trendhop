@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 
 const Cart = ({ display, handleHide, cartList = [] }) => {
     // const [listNum, setListNUm] = useState(0);
+    // console.log('carlist items are', cartList);
     return (
         <div
-            className={`absolute w-screen max-w-sm border border-gray-600 bg-slate-200 px-4 py-8 sm:px-6 lg:px-8 z-20 top-16 right-0 ${display}`}
+            className={`absolute w-screen max-w-sm border border-gray-600 bg-slate-200 px-4 py-8 sm:px-6 lg:px-8 z-20 top-16 right-0 ${display}  max-h-screen`}
             aria-modal="true"
             role="dialog"
             tabIndex="-1"
@@ -24,7 +25,7 @@ const Cart = ({ display, handleHide, cartList = [] }) => {
                 </svg>
             </button>
 
-            <div className="mt-4 space-y-6">
+            <div className="mt-4 space-y-6 overflow-y-scroll max-h-96 py-3">
                 <ul className="space-y-4">
                     {
                         cartList.map((item, index) => {
