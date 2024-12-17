@@ -62,7 +62,7 @@ const Products = () => {
       </header>
       <Filter />
       {productLists.length > 0 ? (
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 pb-16">
           {productLists?.map((item) => {
             const { _id, title, price, images, discountRate } = item;
             const discountPrice = (discountRate / 100) * price;
@@ -84,22 +84,22 @@ const Products = () => {
                   </figure>
 
                   <div className="relative border border-gray-100 bg-white p-6">
-                    <h3 className="text-lg h-auto font-medium text-gray-900 capitalize">
+                    <h3 className="text-lg h-auto font-semibold text-gray-900 capitalize">
                       {title}
                     </h3>
 
                     <div className="mt-1.5 flex gap-5">
                       {discountRate ? (
                         <>
-                          <p className=" text-sm text-gray-700">
+                          <p className=" text-base text-gray-700">
                             Rs {afterDiscountPrice}
                           </p>
-                          <strike className="text-sm text-gray-700 italic">
+                          <strike className="text-base text-gray-700 italic">
                             Rs {price}
                           </strike>
                         </>
                       ) : (
-                        <p>Rs {price}</p>
+                        <p className="text-base">Rs {price}</p>
                       )}
                     </div>
 

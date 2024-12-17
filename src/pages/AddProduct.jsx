@@ -96,7 +96,7 @@ const AddProduct = () => {
     }
   };
   return (
-    <section className="w-full min-h-screen flex justify-center items-center py-10 md:flex-row-reverse flex-col gap-10">
+    <section className="w-full min-h-screen flex justify-center items-center py-10 md:flex-row-reverse flex-col gap-10 z-50">
       {product.images.length > 0 && (
         <div className="flex flex-wrap gap-8 w-96">
           {product.images.map((img, index) => {
@@ -134,7 +134,7 @@ const AddProduct = () => {
 
       <form
         action=""
-        className="flex flex-col gap-4 w-96"
+        className="flex flex-col gap-4 md:w-96 w-10/12"
         onSubmit={handleSubmit}
       >
         <h1 className="text-2xl font-semibold mb-10">Add new product</h1>

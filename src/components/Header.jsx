@@ -3,8 +3,9 @@ import { fetchFilteredProducts } from "../redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CartBox from "./CartBox";
 import Logo from "./Logo";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import MobNavs from "./MobNavs";
+import DesktopNav from "./DesktopNav";
 
 const Header = () => {
   const cartList = useSelector((state) => state.cart.items);
@@ -22,72 +23,30 @@ const Header = () => {
     const url = `https://storeapi.up.railway.app/api/product/filter?search=${searchValue}`;
     dispatch(fetchFilteredProducts(url));
   };
+  const location = useLocation();
+  const hideMobNav =
+    location.pathname === "/trendhop/addProduct" ||
+    location.pathname.startsWith("/trendhop/productDetails");
   return (
     <header className="flex w-full justify-between items-center md:px-16 px-6 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-40">
       {/* mobile view  */}
-      <MobNavs />
+
+      {!hideMobNav && <MobNavs />}
+
       {/* desktop view  */}
       <NavLink to="/trendhop" className="hidden md:block">
         <Logo />
       </NavLink>
 
       <CartBox handleCart={handleCart} isOpen={isOpen} />
-      <form
-        // onSubmit={handleSearch}
-        className="py-3 px-4 border-b-2 border-light md:w-4/12 w-full relative shadow-md"
-      >
-        <input
-          type="search"
-          placeholder="Search.."
-          name="search"
-          onChange={handleSearch}
-          value={searchValue}
-          className="outline-none border-none bg-transparent w-full"
-        />
-        <button
-          type="submit"
-          className="absolute right-3 bg-secondary text-white h-10 w-10 rounded-full top-1"
-        >
-          <i className="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
-      <div className="md:flex gap-8 hidden">
-        <button
-          className="text-black text-2xl relative"
-          onClick={() => handleCart()}
-        >
-          <i className="fa-solid fa-cart-shopping"></i>
-          <span className="totalItem">{totalItem}</span>
-        </button>
-        <button
-          onClick={() => setIsAccountOpen(!isAccountOpen)}
-          className="text-black text-2xl border py-1.5 px-3 border-black rounded-full"
-        >
-          <i className="fa-solid fa-user"></i>
-        </button>
-        <div
-          className={`${
-            !isAccountOpen ? "hidden" : "flex"
-          } h-auto absolute right-0 bg-red w-auto top-20 py-3 px-5 items-end flex-col rounded-md`}
-        >
-          {/* <h1 className="text-2xl font-bold capitalize">account center</h1> */}
-          <div className="flex gap-3">
-            <NavLink
-              to="/trendhop/login"
-              onClick={() => setIsAccountOpen(false)}
-            >
-              Sign In
-            </NavLink>
-            <span>|</span>
-            <NavLink
-              to="/trendhop/signup"
-              onClick={() => setIsAccountOpen(false)}
-            >
-              Sign Up
-            </NavLink>
-          </div>
-        </div>
-      </div>
+      <DesktopNav
+        handleSearch={handleSearch}
+        handleCart={handleCart}
+        cartItems={totalItem}
+        searchValue={searchValue}
+        setIsAccountOpen={setIsAccountOpen}
+        isAccountOpen={isAccountOpen}
+      />
     </header>
   );
 };
