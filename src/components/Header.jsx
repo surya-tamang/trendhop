@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CartBox from "./CartBox";
 import Logo from "./Logo";
 import { NavLink } from "react-router-dom";
+import MobNavs from "./MobNavs";
 
 const Header = () => {
   const cartList = useSelector((state) => state.cart.items);
@@ -22,15 +23,18 @@ const Header = () => {
     dispatch(fetchFilteredProducts(url));
   };
   return (
-    <header className="flex w-full justify-between items-center px-16 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-40">
-      <NavLink to="/">
+    <header className="flex w-full justify-between items-center md:px-16 px-6 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-40">
+      {/* mobile view  */}
+      <MobNavs />
+      {/* desktop view  */}
+      <NavLink to="/trendhop" className="hidden md:block">
         <Logo />
       </NavLink>
 
       <CartBox handleCart={handleCart} isOpen={isOpen} />
       <form
-        onSubmit={handleSearch}
-        className="py-3 px-4 border-b-2 border-light md:w-4/12 w-10/12 relative shadow-md"
+        // onSubmit={handleSearch}
+        className="py-3 px-4 border-b-2 border-light md:w-4/12 w-full relative shadow-md"
       >
         <input
           type="search"
@@ -42,12 +46,12 @@ const Header = () => {
         />
         <button
           type="submit"
-          className="absolute right-3 bg-white hover:bg-secondary hover:text-white h-10 w-10 rounded-full top-1 transition-all ease-in"
+          className="absolute right-3 bg-secondary text-white h-10 w-10 rounded-full top-1"
         >
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
-      <div className="flex gap-8">
+      <div className="md:flex gap-8 hidden">
         <button
           className="text-black text-2xl relative"
           onClick={() => handleCart()}

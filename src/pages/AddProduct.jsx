@@ -20,6 +20,7 @@ const AddProduct = () => {
     setProduct({ ...product, [name]: value });
     setError("");
   };
+  const [pending, setPending] = useState(false);
   const handleFileChange = (e) => {
     setError("");
     const files = Array.from(e.target.files);
@@ -35,6 +36,7 @@ const AddProduct = () => {
     });
   };
   const handleSubmit = async (e) => {
+    setPending(true);
     e.preventDefault();
     console.log(product);
     const {
@@ -85,6 +87,7 @@ const AddProduct = () => {
       const response = await axios.post(url, data);
       console.log(response);
       setSuccess("Product added");
+      setPending(false);
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -228,8 +231,11 @@ const AddProduct = () => {
             <span className="capitalize font-base text-green">{success}</span>
           )}
         </div>
-        <button className="py-2 w-full bg-secondary text-white font-bold mt-4">
-          Add
+        <button
+          className="py-2 w-full bg-secondary text-white font-bold mt-4"
+          disabled={pending}
+        >
+          {pending ? "Adding..." : "Add"}
         </button>
       </form>
     </section>

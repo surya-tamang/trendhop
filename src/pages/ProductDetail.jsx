@@ -102,7 +102,7 @@ const ProductDetail = () => {
           </div>
         </div>
         {/* title sizes price and quantity of product  */}
-        <div className="flex flex-col w-96 gap-3 md:p-0 px-3">
+        <div className="flex flex-col md:w-96 w-full gap-3 md:p-0 px-3">
           <div className="w-full mb-5">
             <p className="capitalize text-2xl font-bold mb-3">
               {product.title}
@@ -118,7 +118,7 @@ const ProductDetail = () => {
                   </strike>
                 </>
               ) : (
-                <p>Rs {price}</p>
+                <p>Rs {product.price}</p>
               )}
             </div>
           </div>
@@ -169,8 +169,8 @@ const ProductDetail = () => {
               </button>
             </div>
           </div>
-          <div className="flex md:gap-2 gap-0 mt-6 md:static fixed bottom-0 w-full left-0">
-            <button className="block w-full bg-secondary text-white p-4 text-sm font-medium transition hover:scale-105">
+          <div className="flex md:gap-2 gap-0 mt-6 md:static fixed bottom-0 left-0 z-50 w-full">
+            <button className="block w-6/12 bg-secondary text-white py-4 text-sm font-medium transition hover:scale-105">
               Buy now
             </button>
             <button
@@ -178,7 +178,7 @@ const ProductDetail = () => {
                 e.preventDefault();
                 handleAddToCart(product);
               }}
-              className="block w-full bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
+              className="block w-6/12 bg-yellow-400 py-4 text-sm font-medium transition hover:scale-105"
             >
               Add to cart
             </button>
@@ -188,7 +188,7 @@ const ProductDetail = () => {
 
       {/* description  */}
 
-      <div className="w-10/12 pb-16">
+      <div className="w-11/12 pb-16">
         <h1 className="text-2xl font-bold my-5">
           Product description of {product.title}
         </h1>

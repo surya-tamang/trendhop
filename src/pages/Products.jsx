@@ -69,7 +69,7 @@ const Products = () => {
             const afterDiscountPrice = Math.floor(price - discountPrice);
             return (
               <NavLink
-                to={`/productDetails/${_id}`}
+                to={`/trendhop/productDetails/${_id}`}
                 key={_id}
                 className="shadow-xl"
               >
