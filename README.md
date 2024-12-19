@@ -1,8 +1,22 @@
-# React + Vite
+# Trendhop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Trendhop is a clothing e-commerce site designed to be user-friendly, built with React.js and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Technologies:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React.js, Tailwind CSS
+- **Backend**: Node.js, Express.js, MongoDB
+- **Authentication**: JWT (JSON Web Tokens)
+- **Payment Integration**: Stripe
+- **Deployment**: Railway, Github action
+
+## Features:
+
+- User authentication and profile management
+- Product catalog with categories, filtering, and search
+- Shopping cart and checkout
+- Admin panel for managing products and orders
+
+## Backend Repository
+
+The backend of this application is located in a separate repository. You can find it [here](https://github.com/yourusername/backend-repo-name).
