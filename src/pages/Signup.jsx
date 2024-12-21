@@ -80,7 +80,7 @@ const Signup = () => {
       await axios.post(url, userData);
       setSuccess("Account created successfully!");
       setTimeout(() => {
-        navigate("/login");
+        navigate("/trendhop/login");
       }, 1500);
     } catch (err) {
       setError(

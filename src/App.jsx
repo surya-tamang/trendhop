@@ -7,10 +7,17 @@ import AddProduct from "./pages/AddProduct";
 import ProductDetail from "./pages/ProductDetail";
 import AccountCenter from "./pages/AccountCenter";
 import CartPage from "./pages/CartPage";
+import Cookies from "universal-cookie";
+import { setUser } from "./redux/slices/userSlice";
+import { useEffect } from "react";
+import ResetScroll from "./hooks/ResetScroll";
 const App = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("token");
   return (
     <>
       <BrowserRouter>
+        <ResetScroll />
         <Header />
         <Routes>
           <Route exct path="/trendhop" element={<Products />} />

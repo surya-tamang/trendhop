@@ -27,27 +27,30 @@ const Header = () => {
   const hideMobNav =
     location.pathname === "/trendhop/addProduct" ||
     location.pathname.startsWith("/trendhop/productDetails");
+
   return (
-    <header className="flex w-full justify-between items-center md:px-16 px-6 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-40">
-      {/* mobile view  */}
+    <>
+      <header className="flex w-full justify-between items-center md:px-16 px-6 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-40">
+        {/* mobile view  */}
 
-      {!hideMobNav && <MobNavs />}
+        {!hideMobNav && <MobNavs />}
 
-      {/* desktop view  */}
-      <NavLink to="/trendhop" className="hidden md:block">
-        <Logo />
-      </NavLink>
+        {/* desktop view  */}
+        <NavLink to="/trendhop" className="hidden md:block">
+          <Logo />
+        </NavLink>
 
-      <CartBox handleCart={handleCart} isOpen={isOpen} />
-      <DesktopNav
-        handleSearch={handleSearch}
-        handleCart={handleCart}
-        cartItems={totalItem}
-        searchValue={searchValue}
-        setIsAccountOpen={setIsAccountOpen}
-        isAccountOpen={isAccountOpen}
-      />
-    </header>
+        <CartBox handleCart={handleCart} isOpen={isOpen} />
+        <DesktopNav
+          handleSearch={handleSearch}
+          handleCart={handleCart}
+          cartItems={totalItem}
+          searchValue={searchValue}
+          setIsAccountOpen={setIsAccountOpen}
+          isAccountOpen={isAccountOpen}
+        />
+      </header>
+    </>
   );
 };
 

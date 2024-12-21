@@ -9,7 +9,7 @@ const Login = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [visblePwd, setVisiblePwd] = useState(false);
 
   const handleChange = (e) => {
@@ -20,8 +20,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
-    const url = "https://storeapi.up.railway.app/api/user/login";
+    setLoading(true);
+    // const url = "https://storeapi.up.railway.app/api/user/login";
+    const url = "http://localhost:8848/api/user/login";
     const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const { email, password } = user;
     if (!email || !password) {
@@ -36,12 +37,17 @@ const Login = () => {
       const response = await axios.post(url, user, {
         withCredentials: true,
       });
-      setSuccess(true);
-      console.log(response);
+      setLoading(false);
+      // console.log(response);
+      setTimeout(() => {
+        navigate("/trendhop");
+      }, 1500);
     } catch (err) {
       setError(
         err.response?.data?.msg || "Something went wrong. Please try again."
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,7 +120,7 @@ const Login = () => {
           type="submit"
           className="bg-secondary w-full py-3 text-white font-semibold bg-opacity-100 hover:bg-opacity-90 rounded-lg capitalize"
         >
-          {success ? "logging in" : "log in"}
+          {loading ? "logging in" : "log in"}
         </button>
         <div className="flex w-full gap-1">
           <span>Don't have an account?</span>

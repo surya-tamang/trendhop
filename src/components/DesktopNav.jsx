@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const DesktopNav = ({
   handleSearch,
@@ -8,24 +9,28 @@ const DesktopNav = ({
   isAccountOpen,
   cartItems,
 }) => {
+  const location = useLocation();
+  const hideSearch = location.pathname.startsWith("/trendhop/productDetails");
   return (
     <>
-      <form className="py-3 px-4 border-b-2 border-light md:w-4/12 w-full relative shadow-md">
-        <input
-          type="search"
-          placeholder="Search.."
-          name="search"
-          onChange={handleSearch}
-          value={searchValue}
-          className="outline-none border-none bg-transparent w-full"
-        />
-        <button
-          type="submit"
-          className="absolute right-3 bg-secondary text-white h-10 w-10 rounded-full top-1"
-        >
-          <i className="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
+      {!hideSearch && (
+        <form className="py-3 px-4 border-b-2 border-light md:w-4/12 w-full relative shadow-md">
+          <input
+            type="search"
+            placeholder="Search.."
+            name="search"
+            onChange={handleSearch}
+            value={searchValue}
+            className="outline-none border-none bg-transparent w-full"
+          />
+          <button
+            type="submit"
+            className="absolute right-3 bg-secondary text-white h-10 w-10 rounded-full top-1"
+          >
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      )}
       <div className="md:flex gap-8 hidden">
         <button
           className="text-black text-2xl relative"
@@ -53,7 +58,7 @@ const DesktopNav = ({
               log out
             </button>
           </div>
-          {/* <div className="flex gap-3">
+          <div className="flex gap-3">
             <NavLink
               to="/trendhop/login"
               onClick={() => setIsAccountOpen(false)}
@@ -67,7 +72,7 @@ const DesktopNav = ({
             >
               Sign Up
             </NavLink>
-          </div> */}
+          </div>
         </div>
       </div>
     </>
