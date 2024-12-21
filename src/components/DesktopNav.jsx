@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import Logo from "./Logo";
+import { useEffect, useRef } from "react";
 
 const DesktopNav = ({
   handleSearch,
@@ -10,10 +11,33 @@ const DesktopNav = ({
   cartItems,
 }) => {
   const location = useLocation();
-  const hideSearch = location.pathname.startsWith("/trendhop/productDetails");
+  const dropdownRef = useRef(null); // Add reference for the dropdown container
+
+  const displaySearchBox = location.pathname === "/trendhop";
+
+  useEffect(() => {
+    // Close the dropdown if clicking outside
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsAccountOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setIsAccountOpen]);
+
   return (
     <>
-      {!hideSearch && (
+      {/* Logo */}
+      <NavLink to="/trendhop" className="hidden md:block">
+        <Logo />
+      </NavLink>
+
+      {/* Search Box */}
+      {displaySearchBox && (
         <form className="py-3 px-4 border-b-2 border-light md:w-4/12 w-full relative shadow-md">
           <input
             type="search"
@@ -31,6 +55,8 @@ const DesktopNav = ({
           </button>
         </form>
       )}
+
+      {/* Cart and Account Buttons */}
       <div className="md:flex gap-8 hidden">
         <button
           className="text-black text-2xl relative"
@@ -45,12 +71,14 @@ const DesktopNav = ({
         >
           <i className="fa-solid fa-user"></i>
         </button>
+
+        {/* Account Dropdown */}
         <div
+          ref={dropdownRef} // Attach the ref here
           className={`${
             !isAccountOpen ? "hidden" : "flex"
           } h-auto absolute right-2 bg-gray-200 w-auto top-24 py-3 px-5 items-end flex-col rounded-md border-2 border-black`}
         >
-          {/* <h1 className="text-2xl font-bold capitalize">account center</h1> */}
           <div className="flex flex-col gap-2">
             <NavLink className="hover:underline">View profile</NavLink>
             <NavLink className="hover:underline">Account security</NavLink>

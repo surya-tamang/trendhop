@@ -1,14 +1,33 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../redux/slices/cartSlice";
 
-const CartBox = ({ handleCart, isOpen }) => {
+const CartBox = ({ handleCart, isOpen, setOpen }) => {
   const cartList = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const totalItem = cartList.length;
+  const dropdownCart = useRef(null);
+
+  useEffect(() => {
+    // Close the dropdown if clicking outside
+    const handleClickOutside = (event) => {
+      if (
+        dropdownCart.current &&
+        !dropdownCart.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleCart]);
 
   return (
     <div
+      ref={dropdownCart}
       className={`absolute hidden top-24 right-0 ${
         !isOpen ? "hidden" : "md:block"
       }`}
@@ -21,10 +40,9 @@ const CartBox = ({ handleCart, isOpen }) => {
       >
         <button
           className="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
-          onClick={() => handleCart()}
+          onClick={handleCart}
         >
           <span className="sr-only">Close cart</span>
-
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -69,7 +87,6 @@ const CartBox = ({ handleCart, isOpen }) => {
                         onClick={() => dispatch(removeFromCart(id))}
                       >
                         <span className="sr-only">Remove item</span>
-
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"

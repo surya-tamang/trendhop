@@ -2,7 +2,6 @@ import { useState } from "react";
 import { fetchFilteredProducts } from "../redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CartBox from "./CartBox";
-import Logo from "./Logo";
 import { NavLink, useLocation } from "react-router-dom";
 import MobNavs from "./MobNavs";
 import DesktopNav from "./DesktopNav";
@@ -27,20 +26,19 @@ const Header = () => {
   const hideMobNav =
     location.pathname === "/trendhop/addProduct" ||
     location.pathname.startsWith("/trendhop/productDetails");
+  const headerContent = location.pathname === "/trendhop";
 
   return (
     <>
-      <header className="flex w-full justify-between items-center md:px-16 px-6 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-40">
+      <header
+        className={`${
+          headerContent ? "flex" : "md:flex hidden"
+        } w-full justify-between items-center md:px-16 px-6 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-30`}
+      >
         {/* mobile view  */}
-
         {!hideMobNav && <MobNavs />}
 
         {/* desktop view  */}
-        <NavLink to="/trendhop" className="hidden md:block">
-          <Logo />
-        </NavLink>
-
-        <CartBox handleCart={handleCart} isOpen={isOpen} />
         <DesktopNav
           handleSearch={handleSearch}
           handleCart={handleCart}
@@ -49,6 +47,9 @@ const Header = () => {
           setIsAccountOpen={setIsAccountOpen}
           isAccountOpen={isAccountOpen}
         />
+
+        {/* cart box  */}
+        <CartBox handleCart={handleCart} isOpen={isOpen} setOpen={setIsOpen} />
       </header>
     </>
   );
