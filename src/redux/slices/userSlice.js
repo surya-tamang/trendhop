@@ -1,19 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { jwtDecode } from "jwt-decode";
+
+const initialState = {
+  isLoggedIn: false,
+  user: null,
+};
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    user: null,
-  },
+  initialState,
   reducers: {
     setUser: (state, action) => {
-      const token = action.payload;
-      const decodedToken = jwtDecode(token);
-      state.user = decodedToken;
-    },
-    clearUser: (state) => {
-      state.user = null;
+      state.isLoggedIn = action.payload.loggedIn;
+      state.user = action.payload.user;
     },
   },
 });

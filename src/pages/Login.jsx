@@ -21,8 +21,8 @@ const Login = () => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    // const url = "https://storeapi.up.railway.app/api/user/login";
-    const url = "http://localhost:8848/api/user/login";
+    const url = "https://storeapi.up.railway.app/api/user/login";
+    // const url = "http://localhost:8848/api/user/login";
     const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const { email, password } = user;
     if (!email || !password) {
@@ -38,10 +38,10 @@ const Login = () => {
         withCredentials: true,
       });
       setLoading(false);
-      // console.log(response);
+      localStorage.setItem("accessToken", response.data.accessToken);
       setTimeout(() => {
-        navigate("/trendhop");
-      }, 1500);
+        navigate("/trendhop/");
+      }, 500);
     } catch (err) {
       setError(
         err.response?.data?.msg || "Something went wrong. Please try again."
