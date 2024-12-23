@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import Logo from "./Logo";
+import Logo from "../Logo";
 import { useEffect, useRef } from "react";
 
 const DesktopNav = ({
@@ -13,7 +13,7 @@ const DesktopNav = ({
   const location = useLocation();
   const dropdownRef = useRef(null); // Add reference for the dropdown container
 
-  const displaySearchBox = location.pathname === "/trendhop";
+  const displaySearchBox = location.pathname === "/trendhop/";
 
   useEffect(() => {
     // Close the dropdown if clicking outside
@@ -32,7 +32,7 @@ const DesktopNav = ({
   return (
     <>
       {/* Logo */}
-      <NavLink to="/trendhop" className="hidden md:block">
+      <NavLink to="/trendhop/" className="hidden md:block">
         <Logo />
       </NavLink>
 

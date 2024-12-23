@@ -20,7 +20,7 @@ const App = () => {
         <ResetScroll />
         <Header />
         <Routes>
-          <Route exct path="/trendhop" element={<Products />} />
+          <Route exct path="/trendhop/" element={<Products />} />
           <Route exct path="/trendhop/addproduct" element={<AddProduct />} />
           <Route exct path="/trendhop/login" element={<Login />} />
           <Route exct path="/trendhop/signup" element={<Signup />} />
