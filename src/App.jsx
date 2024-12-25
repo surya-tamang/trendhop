@@ -21,8 +21,7 @@ const App = () => {
   useAuth();
 
   // Retrieve user state from Redux
-  const user = useSelector((state) => state.user);
-  console.log("User state:", user);
+
 
   return (
     <BrowserRouter>

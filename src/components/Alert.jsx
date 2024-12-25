@@ -1,6 +1,6 @@
 const Alert = ({ message, onClose }) => {
   return (
-    <div className="fixed top-24 left-6/12 translate-x-full max-w-sm w-full p-4 rounded shadow-sm z-40 bg-red flex items-center gap-3 shadow-rose-400">
+    <div className="fixed top-0 left-4/12  max-w-sm w-full p-4 rounded shadow-sm z-40 bg-red flex items-center gap-3 shadow-rose-400">
       <div className="rounded-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"

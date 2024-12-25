@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/slices/userSlice";
+import { setUser, clearUser } from "../redux/slices/userSlice";
 
 const useAuth = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,6 @@ const useAuth = () => {
           dispatch(setUser(response.data)); // Update Redux state with user data
         } catch (error) {
           if (error.response?.status === 401) {
-            // If access token is expired or invalid, attempt to refresh it
             await refreshAccessToken();
           } else {
             setError("Error checking user status");
@@ -41,8 +40,8 @@ const useAuth = () => {
     const refreshAccessToken = async () => {
       if (refreshToken) {
         try {
-          const url = "https://storeapi.up.railway.app/api/refreshToken";
-          // const url = "http://localhost:8848/api/refreshToken";
+          const url = "https://storeapi.up.railway.app/api/user/refreshToken";
+          // const url = "http://localhost:8848/api/user/refreshToken";
           const response = await axios.post(url, {}, { withCredentials: true });
 
           // Update the user data and access token
@@ -62,7 +61,19 @@ const useAuth = () => {
     checkUserLogin();
   }, [accessToken, dispatch]);
 
-  return { loading, error };
+  // Logout function
+  const logout = async () => {
+    try {
+      const url = "https://storeapi.up.railway.app/api/user/logout";
+      await axios.post(url, {}, { withCredentials: true });
+      localStorage.removeItem("accessToken");
+      dispatch(clearUser());
+      setLoading(false);
+    } catch (error) {
+      setError("Error logging out");
+    }
+  };
+  return { loading, error, logout };
 };
 
 export default useAuth;

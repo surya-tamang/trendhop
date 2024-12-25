@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -11,11 +11,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const [address, setAddress] = useState({
-    city: "",
-    tole: "",
-    near: "",
-  });
+
   const [rePwd, setRePwd] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -25,9 +21,6 @@ const Signup = () => {
   const handleChange = (e) => {
     setError("");
     const { name, value } = e.target;
-    if (name in address) {
-      return setAddress({ ...address, [name]: value });
-    }
     return setNewUser({ ...newUser, [name]: value });
   };
 
@@ -41,26 +34,14 @@ const Signup = () => {
     const passwordRegex =
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
 
-    const userData = { ...newUser, address }; // Combine user and address
-
-    const { first_name, last_name, phone, email, password } = newUser;
+    const { first_name, last_name, email, password } = newUser;
 
     // Basic Validation
-    if (
-      !first_name ||
-      !last_name ||
-      !phone ||
-      !email ||
-      !address.city ||
-      !password
-    ) {
+    if (!first_name || !last_name || !email || !password) {
       setError("All fields are required.");
       return;
     }
-    if (phone.length !== 10) {
-      setError("Enter a valid 10-digit phone number.");
-      return;
-    }
+
     if (!emailRegex.test(email)) {
       setError("Enter a valid email.");
       return;
@@ -77,7 +58,7 @@ const Signup = () => {
     }
 
     try {
-      await axios.post(url, userData);
+      await axios.post(url, newUser);
       setSuccess("Account created successfully!");
       setTimeout(() => {
         navigate("/trendhop/login");
@@ -89,27 +70,24 @@ const Signup = () => {
     }
   };
 
-  const isLabelDown = (field) => {
-    if (field in address) {
-      return !address[field];
-    }
-    return !newUser[field];
-  };
+  const isLabelDown = (field) => !newUser[field];
 
   return (
-    <section className="text-black flex items-center justify-center w-full py-16">
+    <section
+      className={`text-black flex items-center justify-center w-full py-16 min-h-screen fixed top-0 left-0`}
+    >
       <form
         onSubmit={handleSubmit}
         className={`md:w-6/12 w-10/12 bg-light ${
           error ? "border-red border-2 shadow-red shadow-inner" : ""
-        } flex flex-col justify-center items-center p-6 rounded-2xl gap-8`}
+        } flex flex-col justify-center items-center p-6 rounded-2xl gap-3`}
       >
         <h1 className="text-2xl font-bold text-primary mb-10">
           Register New Account
         </h1>
 
         {/* Name Fields */}
-        <div className="flex w-full md:flex-row flex-col gap-3">
+        <div className="flex w-full md:flex-row flex-col gap-2">
           {/* First Name */}
           <div className="border-2 border-primary w-full rounded-lg relative h-14">
             <input
@@ -143,76 +121,6 @@ const Signup = () => {
               } px-2 bg-light text-primary`}
             >
               Last name
-            </label>
-          </div>
-        </div>
-
-        {/* Phone */}
-        <div className="border-2 border-primary w-full rounded-lg relative h-14">
-          <input
-            type="number"
-            name="phone"
-            value={newUser.phone}
-            onChange={handleChange}
-            className="border-none outline-none bg-transparent z-20 absolute top-3 left-5  w-full"
-          />
-          <label
-            className={`absolute left-3 transition-all duration-200 ${
-              isLabelDown("phone") ? "top-3 text-base" : "-top-3 text-sm"
-            } px-2 bg-light text-primary`}
-          >
-            Phone number
-          </label>
-        </div>
-
-        {/* Address */}
-        <div className="flex w-full md:flex-row flex-col gap-3">
-          <div className="border-2 border-primary w-full rounded-lg relative h-14">
-            <input
-              type="text"
-              name="city"
-              value={address.city}
-              onChange={handleChange}
-              className="border-none outline-none bg-transparent z-20 absolute top-3 left-5  w-full"
-            />
-            <label
-              className={`absolute left-3 transition-all duration-200 ${
-                isLabelDown("city") ? "top-3 text-base" : "-top-3 text-sm"
-              } px-2 bg-light text-primary`}
-            >
-              City
-            </label>
-          </div>
-          <div className="border-2 border-primary w-full rounded-lg relative h-14">
-            <input
-              type="text"
-              name="tole"
-              value={address.tole}
-              onChange={handleChange}
-              className="border-none outline-none bg-transparent z-20 absolute top-3 left-5  w-full"
-            />
-            <label
-              className={`absolute left-3 transition-all duration-200 ${
-                isLabelDown("tole") ? "top-3 text-base" : "-top-3 text-sm"
-              } px-2 bg-light text-primary`}
-            >
-              Tole
-            </label>
-          </div>
-          <div className="border-2 border-primary w-full rounded-lg relative h-14">
-            <input
-              type="text"
-              name="near"
-              value={address.near}
-              onChange={handleChange}
-              className="border-none outline-none bg-transparent z-20 absolute top-3 left-5  w-full"
-            />
-            <label
-              className={`absolute left-3 transition-all duration-200 ${
-                isLabelDown("near") ? "top-3 text-base" : "-top-3 text-sm"
-              } px-2 bg-light text-primary`}
-            >
-              Near
             </label>
           </div>
         </div>

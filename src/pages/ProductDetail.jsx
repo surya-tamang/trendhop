@@ -2,15 +2,20 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+
+// components
 import { addToCart } from "../redux/slices/cartSlice";
 import Alert from "../components/Alert";
 import useScrollPosition from "../hooks/ScrollPos";
 import Loading from "../components/Loading";
-import { preconnect } from "react-dom";
+import LoginBox from "../components/LoginBox";
+import SuccessNoti from "../components/SuccessNoti";
 
 const ProductDetail = () => {
+  const { user } = useSelector((state) => state.user);
   const cartItems = useSelector((state) => state.cart.items);
   const [alert, setAlert] = useState("");
+  const [isAddedToCart, setIsAddedToCart] = useState("");
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const { id } = useParams();
@@ -19,6 +24,9 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const isVisible = useScrollPosition();
   const [afterDiscPrice, setAfterDiscPrice] = useState();
+  const [isVisibleSignin, setIsVisibleSignin] = useState(false);
+  const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
   //  handling order details
 
@@ -38,7 +46,7 @@ const ProductDetail = () => {
   // handling order Details changes
   const handleChange = (e) => {
     const applicablePrice = product.discountRate
-      ? afterDiscountPrice
+      ? afterDiscPrice
       : product.price;
     const { name, value } = e.target;
     setOrderDetails((prevOrder) => {
@@ -52,7 +60,40 @@ const ProductDetail = () => {
       };
     });
   };
-  // console.log(orderDetails);
+
+  const confirmOrder = async () => {
+    if (!selectedPaymentMethod) {
+      alert("Please select a payment method.");
+      return;
+    }
+
+    const order = {
+      userId: user.userId,
+      items: [
+        {
+          productId: product._id,
+          quantity: orderDetails.items.quantity,
+          color: orderDetails.items.color,
+          size: orderDetails.items.size,
+        },
+      ],
+      totalPrice: orderDetails.totalPrice,
+      paymentMethod: selectedPaymentMethod,
+      paymentStatus: "pending",
+    };
+
+    // try {
+    //   const response = await axios.post(
+    //     "https://your-api-url.com/orders",
+    //     order
+    //   );
+    //   console.log("Order placed successfully:", response.data);
+    //   setIsPaymentModalVisible(false);
+    //   // Optionally redirect or show order confirmation
+    // } catch (error) {
+    //   console.error("Error placing order:", error);
+    // }
+  };
 
   // handlle fetching product
 
@@ -72,6 +113,7 @@ const ProductDetail = () => {
           ...prev,
           items: {
             ...prev.items,
+            userId: user?.userId || "",
             color: fetchedProduct.colors[0],
             size: fetchedProduct.sizes[0],
           },
@@ -88,7 +130,7 @@ const ProductDetail = () => {
 
     const url = `https://storeapi.up.railway.app/api/product/${id}`;
     fetchProduct(url);
-  }, [id]);
+  }, [id, user]);
 
   const handleAddToCart = (product) => {
     const isProductInCart = cartItems.some((item) => item.id === product._id);
@@ -96,6 +138,7 @@ const ProductDetail = () => {
     if (isProductInCart) {
       setAlert("Product is already in the cart");
     } else {
+      setIsAddedToCart("Product added");
       dispatch(
         addToCart({
           id: product._id,
@@ -104,6 +147,9 @@ const ProductDetail = () => {
           images: product.images,
         })
       );
+      setTimeout(() => {
+        setIsAddedToCart(null);
+      }, 1000);
     }
   };
 
@@ -112,7 +158,7 @@ const ProductDetail = () => {
   const handleDecrement = () => {
     if (quantity > 1) {
       const applicablePrice = product.discountRate
-        ? afterDiscountPrice
+        ? afterDiscPrice
         : product.price;
 
       setQuantity((prev) => prev - 1);
@@ -129,7 +175,7 @@ const ProductDetail = () => {
 
   const handleIncrement = () => {
     const applicablePrice = product.discountRate
-      ? afterDiscountPrice
+      ? afterDiscPrice
       : product.price;
 
     setQuantity((prev) => prev + 1);
@@ -156,7 +202,12 @@ const ProductDetail = () => {
   return (
     <section className="flex w-full min-h-screen md:gap-16 gap-0 bg-light flex-col items-center md:py-10 py-0">
       {alert && <Alert message={alert} onClose={() => setAlert(null)} />}
+      {isAddedToCart && <SuccessNoti message={isAddedToCart} />}
 
+      <LoginBox
+        visible={isVisibleSignin}
+        close={() => setIsVisibleSignin(false)}
+      />
       {/* overview */}
 
       <div className="flex md:w-10/12 w-full items-center justify-center  md:gap-16 gap-8 shadow-lg md:py-6 py-0 pb-4 md:flex-row flex-col">
@@ -241,6 +292,8 @@ const ProductDetail = () => {
               </select>
             )}
           </div>
+
+          {/* quantity  */}
           <div className="w-full flex items-center">
             <label htmlFor="quantity">Quantity :</label> &nbsp;&nbsp;
             <div className="flex items-center gap-2">
@@ -265,19 +318,61 @@ const ProductDetail = () => {
 
           {/* desktop view  */}
           <div className={`gap-0 mt-6 md:flex hidden w-full`}>
-            <button className="block w-6/12 bg-secondary text-white py-4 text-sm font-medium transition hover:scale-105">
+            <button
+              onClick={() =>
+                user ? setIsPaymentModalVisible(true) : setIsVisibleSignin(true)
+              }
+              className="block w-6/12 bg-secondary text-white py-4 text-sm font-medium transition hover:scale-105"
+            >
               Buy now
             </button>
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleAddToCart(product);
-              }}
+              onClick={() =>
+                user ? handleAddToCart(product) : setIsVisibleSignin(true)
+              }
               className="block w-6/12 bg-yellow-400 py-4 text-sm font-medium transition hover:scale-105"
             >
               Add to cart
             </button>
           </div>
+
+          {isPaymentModalVisible && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <div className="bg-white p-5 rounded-lg">
+                <h3 className="text-xl font-semibold mb-4">
+                  Select Payment Method
+                </h3>
+
+                <select
+                  value={selectedPaymentMethod}
+                  onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+                  className="border p-2 mb-4"
+                >
+                  <option value="">Select Payment Method</option>
+                  <option value="credit_card">
+                    Credit Card (not available)
+                  </option>
+                  <option value="paypal">Wallet (not available)</option>
+                  <option value="cash_on_delivery">Cash on Delivery</option>
+                </select>
+
+                <div className="flex gap-4">
+                  <button
+                    onClick={confirmOrder}
+                    className="bg-green text-white py-2 px-4 rounded"
+                  >
+                    Confirm Order
+                  </button>
+                  <button
+                    onClick={() => setIsPaymentModalVisible(false)}
+                    className="bg-gray-500 text-white py-2 px-4 rounded"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* mobile view  */}
 

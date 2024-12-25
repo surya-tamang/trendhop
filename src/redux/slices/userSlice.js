@@ -13,8 +13,12 @@ const userSlice = createSlice({
       state.isLoggedIn = action.payload.loggedIn;
       state.user = action.payload.user;
     },
+    clearUser: (state) => {
+      state.isLoggedIn = false;
+      state.user = null;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

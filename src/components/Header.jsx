@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { fetchFilteredProducts } from "../redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
-import CartBox from "./CartBox";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+// import components
 import MobNavs from "./navComponents/MobNavs";
+import CartBox from "./CartBox";
 import DesktopNav from "./navComponents/DesktopNav";
 
 const Header = () => {
