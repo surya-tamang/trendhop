@@ -91,7 +91,12 @@ const DesktopNav = ({
         >
           {isLoggedIn ? (
             <div className="flex flex-col gap-2">
-              <NavLink className="hover:underline">View profile</NavLink>
+              <NavLink
+                to="/trendhop/account_center"
+                className="hover:underline"
+              >
+                View profile
+              </NavLink>
               <NavLink className="hover:underline">Account security</NavLink>
               <button
                 onClick={logout}
@@ -119,7 +124,6 @@ const DesktopNav = ({
           )}
         </div>
       </div>
-     
     </>
   );
 };

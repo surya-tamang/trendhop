@@ -5,7 +5,6 @@ import { setUser, clearUser } from "../redux/slices/userSlice";
 
 const useAuth = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Get tokens from localStorage
@@ -28,11 +27,8 @@ const useAuth = () => {
             await refreshAccessToken();
           } else {
             setError("Error checking user status");
-            setLoading(false);
           }
         }
-      } else {
-        setLoading(false); // No token, skip checking user
       }
     };
 
@@ -47,14 +43,11 @@ const useAuth = () => {
           // Update the user data and access token
           dispatch(setUser(response.data.user));
           localStorage.setItem("accessToken", response.data.accessToken);
-          setLoading(false);
         } catch (error) {
           setError("Unable to refresh token");
-          setLoading(false);
         }
       } else {
         setError("No refresh token available");
-        setLoading(false);
       }
     };
 
@@ -68,12 +61,11 @@ const useAuth = () => {
       await axios.post(url, {}, { withCredentials: true });
       localStorage.removeItem("accessToken");
       dispatch(clearUser());
-      setLoading(false);
     } catch (error) {
       setError("Error logging out");
     }
   };
-  return { loading, error, logout };
+  return { error, logout };
 };
 
 export default useAuth;

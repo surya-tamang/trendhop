@@ -14,6 +14,7 @@ const Login = () => {
 
   const handleChange = (e) => {
     setError("");
+    setLoading("");
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
