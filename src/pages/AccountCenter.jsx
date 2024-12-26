@@ -1,15 +1,25 @@
 import { FaCircleUser } from "react-icons/fa6";
 import { FaUserEdit, FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 // components
 import UpdateAccDetail from "../components/UpdateAccDetail";
+import { useSelector } from "react-redux";
 
 const AccountCenter = () => {
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const [isVisbleUpdateBox, setIsVisbleUpdateBox] = useState(false);
   const [isVisibleProfile, setIsVisibleProfile] = useState(false);
   useEffect(() => {
+    if (!user) {
+      navigate("/trendhop/login");
+    } else {
+      const decoded = jwtDecode(user);
+      console.log(decoded);
+    }
     isVisbleUpdateBox || isVisibleProfile
       ? document.body.classList.add("no-scroll")
       : document.body.classList.remove("no-scroll");
