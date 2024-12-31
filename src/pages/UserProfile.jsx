@@ -8,18 +8,13 @@ import { jwtDecode } from "jwt-decode";
 import UpdateAccDetail from "../components/UpdateAccDetail";
 import { useSelector } from "react-redux";
 
-const AccountCenter = () => {
+const UserProfile = () => {
   const { user } = useSelector((state) => state.user);
-  const navigate = useNavigate();
   const [isVisbleUpdateBox, setIsVisbleUpdateBox] = useState(false);
   const [isVisibleProfile, setIsVisibleProfile] = useState(false);
   useEffect(() => {
-    if (!user) {
-      navigate("/trendhop/login");
-    } else {
-      const decoded = jwtDecode(user);
-      console.log(decoded);
-    }
+    console.log(user);
+
     isVisbleUpdateBox || isVisibleProfile
       ? document.body.classList.add("no-scroll")
       : document.body.classList.remove("no-scroll");
@@ -34,8 +29,17 @@ const AccountCenter = () => {
         <FaArrowLeft />
       </NavLink>
       <header className="flex items-center flex-col">
-        <div className="relative h-32 w-32 rounded-full">
-          <FaCircleUser className="w-full h-full text-gray-400" />
+        <div className="relative h-32 w-32 rounded-full border-gray-400 border-4">
+          {user?.avatar ? (
+            <img
+              src={user?.avatar}
+              alt={user?.first_name}
+              className="w-full h-full"
+            />
+          ) : (
+            <FaCircleUser className="w-full h-full text-gray-400" />
+          )}
+
           <button
             onClick={() => setIsVisibleProfile(true)}
             className="absolute bottom-0 -right-5 text-gray-700"
@@ -43,8 +47,10 @@ const AccountCenter = () => {
             <FaUserEdit />
           </button>
         </div>
-        <h1 className="mt-4 text-2xl font-bold text-gray-800">Surya Tamang</h1>
-        <p className="text-gray-600">tmgsurya055@gmail.com</p>
+        <h1 className="mt-4 text-2xl font-bold text-gray-800">
+          {user?.first_name} {user?.last_name}
+        </h1>
+        <p className="text-gray-600">{user?.email}</p>
       </header>
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 ${
@@ -96,27 +102,29 @@ const AccountCenter = () => {
           {/* Name */}
           <div className="flex justify-between flex-wrap">
             <dt className="font-medium">Name:</dt>
-            <dd>Surya Tamang</dd>
+            <dd>
+              {user?.first_name} {user?.last_name}
+            </dd>
           </div>
 
           {/* Email */}
           <div className="flex justify-between flex-wrap">
             <dt className="font-medium">Email:</dt>
-            <dd>tmgsurya055@gmail.com</dd>
+            <dd>{user?.email}</dd>
           </div>
           {/* Phone */}
           <div className="flex justify-between flex-wrap">
             <dt className="font-medium">Phone:</dt>
-            <dd>9876543210</dd>
+            <dd>{user?.phone}</dd>
           </div>
 
           {/* Address */}
           <div>
             <dt className="font-medium">Address:</dt>
             <dd className="ml-0 md:ml-4 mt-2 space-y-1">
-              <div>City: Kathmandu</div>
-              <div>Tole: Saraswatinagar</div>
-              <div>Near: Himsheela Boarding School</div>
+              <div>City: {user?.address?.city}</div>
+              <div>Tole: {user?.address?.tole}</div>
+              <div>Near: {user?.address?.near}</div>
             </dd>
           </div>
         </dl>
@@ -135,4 +143,4 @@ const AccountCenter = () => {
   );
 };
 
-export default AccountCenter;
+export default UserProfile;

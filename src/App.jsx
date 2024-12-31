@@ -9,9 +9,9 @@ import Products from "./pages/Products";
 import AddProduct from "./pages/AddProduct";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import AccountCenter from "./pages/AccountCenter";
 import CartPage from "./pages/CartPage";
 import ProductDetail from "./pages/ProductDetail";
+import UserProfile from "./pages/UserProfile";
 
 // Custom hooks
 import useAuth from "./hooks/useAuth";
@@ -21,8 +21,8 @@ const App = () => {
   useAuth();
 
   // Retrieve user state from Redux
-
-
+  const user = useSelector((state) => state.user);
+  // console.log(user);
   return (
     <BrowserRouter>
       <ResetScroll />
@@ -32,11 +32,7 @@ const App = () => {
         <Route exact path="/trendhop/addproduct" element={<AddProduct />} />
         <Route exact path="/trendhop/login" element={<Login />} />
         <Route exact path="/trendhop/signup" element={<Signup />} />
-        <Route
-          exact
-          path="/trendhop/account_center"
-          element={<AccountCenter />}
-        />
+        <Route exact path="/trendhop/user_profile" element={<UserProfile />} />
         <Route exact path="/trendhop/cart" element={<CartPage />} />
         <Route
           exact

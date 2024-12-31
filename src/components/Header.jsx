@@ -27,6 +27,8 @@ const Header = () => {
   const location = useLocation();
   const hideMobNav =
     location.pathname === "/trendhop/addProduct" ||
+    location.pathname === "/trendhop/signup" ||
+    location.pathname === "/trendhop/login" ||
     location.pathname.startsWith("/trendhop/productDetails");
   const headerContent = location.pathname === "/trendhop/";
 
@@ -34,7 +36,7 @@ const Header = () => {
     <>
       <header
         className={`${
-          headerContent ? "flex" : "hidden"
+          headerContent ? "flex" : "md:flex hidden"
         } w-full justify-between items-center md:px-16 px-6 py-4 border border-b-2 sticky top-0 bg-slate-50 shadow-lg z-30`}
       >
         {/* desktop view  */}

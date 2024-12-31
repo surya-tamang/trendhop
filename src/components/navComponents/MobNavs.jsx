@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import logo from "/logo.png";
 import useScrollPosition from "../../hooks/ScrollPos";
+import { useSelector } from "react-redux";
 const MobNavs = () => {
+  const { isLoggedIn } = useSelector((state) => state.user);
+
   const isVisible = useScrollPosition();
   return (
     <div
@@ -19,7 +22,7 @@ const MobNavs = () => {
       </NavLink>
 
       <NavLink
-        to="/trendhop/account_center"
+        to={isLoggedIn ? "/trendhop/user_profile" : "/trendhop/login"}
         className="flex flex-col items-center"
       >
         <i className="fa-solid fa-user"></i>

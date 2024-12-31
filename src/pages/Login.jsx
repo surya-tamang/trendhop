@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -55,14 +56,20 @@ const Login = () => {
   const isLabelDown = (field) => !user[field];
 
   return (
-    <section className="text-black flex items-center justify-center w-full py-10">
+    <section className="text-black flex items-center justify-center w-full py-20">
+      <button
+        onClick={() => navigate("/trendhop/")}
+        className="fixed top-8 left-8"
+      >
+        <FaArrowLeft />
+      </button>
       <form
         onSubmit={handleSubmit}
         className={`md:w-6/12 w-10/12 bg-light ${
           error ? "border-red border-2 shadow-red shadow-inner" : ""
-        } flex flex-col justify-center items-center p-6 rounded-2xl gap-8`}
+        } flex flex-col justify-center items-center p-6 rounded-2xl gap-4`}
       >
-        <h1 className="text-2xl font-bold text-primary mb-10">
+        <h1 className="md:text-2xl text-xl font-bold text-primary mb-10">
           Log in to your account
         </h1>
 
@@ -112,18 +119,28 @@ const Login = () => {
             Password
           </label>
         </div>
-
-        <div className="w-full flex justify-end">
-          {error && <p className="text-red capitalize">{error}</p>}
+        <div className="text-right w-full">
+          <button
+            type="button"
+            onClick={() => navigate("/trendhop/forgot_password")}
+            className="underline"
+          >
+            Forgot password
+          </button>
         </div>
 
+        {error && (
+          <div className="w-full flex justify-end">
+            <p className="text-red capitalize">{error}</p>
+          </div>
+        )}
         <button
           type="submit"
           className="bg-secondary w-full py-3 text-white font-semibold bg-opacity-100 hover:bg-opacity-90 rounded-lg capitalize"
         >
           {loading ? "logging in" : "log in"}
         </button>
-        <div className="flex w-full gap-1">
+        <div className="text-center space-x-1 mt-4 mb-2">
           <span>Don't have an account?</span>
           <button
             type="button"

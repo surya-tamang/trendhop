@@ -3,7 +3,7 @@ import Logo from "../Logo";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
-import LoginBox from "../LoginBox";
+import LoginBox from "../auth_components/LoginBox";
 
 const DesktopNav = ({
   handleSearch,
@@ -92,12 +92,19 @@ const DesktopNav = ({
           {isLoggedIn ? (
             <div className="flex flex-col gap-2">
               <NavLink
-                to="/trendhop/account_center"
+                to="/trendhop/user_profile"
                 className="hover:underline"
+                onClick={() => setIsAccountOpen(false)}
               >
                 View profile
               </NavLink>
-              <NavLink className="hover:underline">Account security</NavLink>
+
+              <NavLink
+                onClick={() => setIsAccountOpen(false)}
+                className="hover:underline"
+              >
+                Account security
+              </NavLink>
               <button
                 onClick={logout}
                 className="bg-orange-600 py-1 mt-6 text-white capitalize font-semibold rounded-sm"

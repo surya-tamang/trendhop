@@ -136,7 +136,15 @@ const LoginBox = ({ visible, close }) => {
             Password
           </label>
         </div>
-
+        <div className="text-right w-full">
+          <button
+            type="button"
+            onClick={() => navigate("/trendhop/forgot_password")}
+            className="underline"
+          >
+            Forgot password
+          </button>
+        </div>
         <div className="w-full flex justify-end">
           {error && <p className="text-red capitalize">{error}</p>}
         </div>
@@ -147,7 +155,7 @@ const LoginBox = ({ visible, close }) => {
         >
           {loading ? "logging in" : "log in"}
         </button>
-        <div className="flex w-full gap-1">
+        <div className="text-center space-x-1">
           <span>Don't have an account?</span>
           <button
             type="button"

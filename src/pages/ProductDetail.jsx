@@ -8,7 +8,7 @@ import { addToCart } from "../redux/slices/cartSlice";
 import Alert from "../components/Alert";
 import useScrollPosition from "../hooks/ScrollPos";
 import Loading from "../components/Loading";
-import LoginBox from "../components/LoginBox";
+import LoginBox from "../components/auth_components/LoginBox";
 import SuccessNoti from "../components/SuccessNoti";
 
 const ProductDetail = () => {

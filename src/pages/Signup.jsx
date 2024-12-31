@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -74,8 +75,14 @@ const Signup = () => {
 
   return (
     <section
-      className={`text-black flex items-center justify-center w-full py-16 min-h-screen fixed top-0 left-0`}
+      className={`text-black flex items-center justify-center w-full pb-20 pt-10 min-h-screen`}
     >
+      <button
+        onClick={() => navigate("/trendhop/")}
+        className="fixed top-8 left-8"
+      >
+        <FaArrowLeft />
+      </button>
       <form
         onSubmit={handleSubmit}
         className={`md:w-6/12 w-10/12 bg-light ${
@@ -214,7 +221,7 @@ const Signup = () => {
         >
           Sign Up
         </button>
-        <div className="flex w-full gap-2">
+        <div className="text-center space-x-1">
           <span>Already have an account?</span>
           <button
             type="button"
