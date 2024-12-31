@@ -8,7 +8,7 @@ Trendhop is a clothing e-commerce site designed to be user-friendly, built with 
 - **Backend**: Node.js, Express.js, MongoDB
 - **Authentication**: JWT (JSON Web Tokens)
 - **Payment Integration**: Stripe
-- **Deployment**: Railway, Github action
+- **Deployment**: Railway, Github
 
 ## Features:
 
