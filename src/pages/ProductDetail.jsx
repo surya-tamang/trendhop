@@ -63,6 +63,8 @@ const ProductDetail = () => {
   };
 
   const confirmOrder = async () => {
+    const url = "https://storeapi.up.railway.app/api/order";
+    // const url =  "http://localhost:8848/api/order";
     if (!selectedPaymentMethod) {
       alert("Please select a payment method.");
       return;
@@ -85,7 +87,7 @@ const ProductDetail = () => {
     // console.log(order);
     try {
       const response = await axios.post(
-        "http://localhost:8848/api/order",
+       url,
         order
       );
       setIsPaymentModalVisible(false);
