@@ -35,8 +35,8 @@ const useAuth = () => {
     // Function to refresh access token using refresh token
     const refreshAccessToken = async () => {
       try {
-        // const url = "https://storeapi.up.railway.app/api/user/refreshToken";
-        const url = "http://localhost:8848/api/user/refreshToken";
+        const url = "https://storeapi.up.railway.app/api/user/refreshToken";
+        // const url = "http://localhost:8848/api/user/refreshToken";
         const response = await axios.post(url, {}, { withCredentials: true });
 
         // Update the user data and access token
