@@ -10,6 +10,7 @@ import useScrollPosition from "../hooks/ScrollPos";
 import Loading from "../components/Loading";
 import LoginBox from "../components/auth_components/LoginBox";
 import SuccessNoti from "../components/SuccessNoti";
+import PaymentModal from "../components/PaymentModal";
 
 const ProductDetail = () => {
   const { user } = useSelector((state) => state.user);
@@ -27,7 +28,7 @@ const ProductDetail = () => {
   const [isVisibleSignin, setIsVisibleSignin] = useState(false);
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
-
+  const [success, setSuccess] = useState(null);
   //  handling order details
 
   const [orderDetails, setOrderDetails] = useState({
@@ -68,10 +69,10 @@ const ProductDetail = () => {
     }
 
     const order = {
-      userId: user.userId,
+      userId: user?._id,
       items: [
         {
-          productId: product._id,
+          productId: product?._id,
           quantity: orderDetails.items.quantity,
           color: orderDetails.items.color,
           size: orderDetails.items.size,
@@ -81,18 +82,21 @@ const ProductDetail = () => {
       paymentMethod: selectedPaymentMethod,
       paymentStatus: "pending",
     };
-
-    // try {
-    //   const response = await axios.post(
-    //     "https://your-api-url.com/orders",
-    //     order
-    //   );
-    //   console.log("Order placed successfully:", response.data);
-    //   setIsPaymentModalVisible(false);
-    //   // Optionally redirect or show order confirmation
-    // } catch (error) {
-    //   console.error("Error placing order:", error);
-    // }
+    // console.log(order);
+    try {
+      const response = await axios.post(
+        "http://localhost:8848/api/order",
+        order
+      );
+      setIsPaymentModalVisible(false);
+      setSuccess("Order Confirmed");
+      setTimeout(() => {
+        setSuccess(null);
+      }, 1000);
+      // console.log("Order placed successfully:", response.data);
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
   };
 
   // handlle fetching product
@@ -203,7 +207,7 @@ const ProductDetail = () => {
     <section className="flex w-full min-h-screen md:gap-16 gap-0 bg-light flex-col items-center md:py-10 py-0">
       {alert && <Alert message={alert} onClose={() => setAlert(null)} />}
       {isAddedToCart && <SuccessNoti message={isAddedToCart} />}
-
+      {success && <SuccessNoti message={success} />}
       <LoginBox
         visible={isVisibleSignin}
         close={() => setIsVisibleSignin(false)}
@@ -337,41 +341,12 @@ const ProductDetail = () => {
           </div>
 
           {isPaymentModalVisible && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-              <div className="bg-white p-5 rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">
-                  Select Payment Method
-                </h3>
-
-                <select
-                  value={selectedPaymentMethod}
-                  onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                  className="border p-2 mb-4"
-                >
-                  <option value="">Select Payment Method</option>
-                  <option value="credit_card">
-                    Credit Card (not available)
-                  </option>
-                  <option value="paypal">Wallet (not available)</option>
-                  <option value="cash_on_delivery">Cash on Delivery</option>
-                </select>
-
-                <div className="flex gap-4">
-                  <button
-                    onClick={confirmOrder}
-                    className="bg-green text-white py-2 px-4 rounded"
-                  >
-                    Confirm Order
-                  </button>
-                  <button
-                    onClick={() => setIsPaymentModalVisible(false)}
-                    className="bg-gray-500 text-white py-2 px-4 rounded"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
+            <PaymentModal
+              close={() => setIsPaymentModalVisible(false)}
+              setPaymentMethod={(e) => setSelectedPaymentMethod(e.target.value)}
+              paymentMethod={selectedPaymentMethod}
+              onConfirm={confirmOrder}
+            />
           )}
 
           {/* mobile view  */}

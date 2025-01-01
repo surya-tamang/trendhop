@@ -34,20 +34,16 @@ const useAuth = () => {
 
     // Function to refresh access token using refresh token
     const refreshAccessToken = async () => {
-      if (refreshToken) {
-        try {
-          const url = "https://storeapi.up.railway.app/api/user/refreshToken";
-          // const url = "http://localhost:8848/api/user/refreshToken";
-          const response = await axios.post(url, {}, { withCredentials: true });
+      try {
+        // const url = "https://storeapi.up.railway.app/api/user/refreshToken";
+        const url = "http://localhost:8848/api/user/refreshToken";
+        const response = await axios.post(url, {}, { withCredentials: true });
 
-          // Update the user data and access token
-          dispatch(setUser(response.data.user));
-          localStorage.setItem("accessToken", response.data.accessToken);
-        } catch (error) {
-          setError("Unable to refresh token");
-        }
-      } else {
-        setError("No refresh token available");
+        // Update the user data and access token
+        dispatch(setUser(response.data.user));
+        localStorage.setItem("accessToken", response.data.accessToken);
+      } catch (error) {
+        setError("Unable to refresh token");
       }
     };
 
